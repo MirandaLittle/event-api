@@ -2,8 +2,11 @@ import express from 'express';
 import getUsers from '../services/users/getUsers.js';
 import createUser from '../services/users/createUser.js';
 import updateUserById from '../services/users/updateUserById.js';
+import deleteUser from '../services/users/deleteUser.js';
+import getUserById from '../services/users/getUserById.js';
 import authMiddleware from '../middleware/auth.js';
 import notFoundErrorHandler from '../middleware/notFoundErrorHandler.js';
+
 
 const router = express.Router();
 
@@ -17,6 +20,13 @@ router.get('/', (req, res) => {
     }
   })
 
+  router.get('/:id', (req, res) => {
+      const { id } = req.params 
+      const user = getUserById(id)
+      res.status(200).json(user)
+      }, notFoundErrorHandler);
+
+      
   router.post('/', authMiddleware, (req, res) => {
     try {
       const { username, password, name, image } = req.body // request body
@@ -37,5 +47,13 @@ router.get('/', (req, res) => {
       const updatedUser = updateUserById(id, username, password, name, image)
       res.status(200).json(updatedUser)
 }, notFoundErrorHandler);
-  export default router;
 
+  router.delete('/:id', authMiddleware, (req, res) => {
+      const { id } = req.params;
+      const deletedUserId = deleteUser(id);
+        res.status(200).json({
+          message: `User with id ${deletedUserId} was deleted!`,
+        });
+      }, notFoundErrorHandler);
+
+      export default router;
