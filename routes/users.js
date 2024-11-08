@@ -44,9 +44,13 @@ router.get('/', (req, res) => {
     // try {
       const { id } = req.params
       const { username, password, name, image } = req.body
-      const updatedUser = updateUserById(id, username, password, name, image)
-      res.status(200).json(updatedUser)
-}, notFoundErrorHandler);
+      const updatedUser = updateUserById(id, {username, password, name, image})
+      
+      if (updatedUser) { // IF STATEMENT TOEGEVOEGD
+      res.status(200).json({
+        message: `User with id ${id} successfully updated`,
+      updatedUser,})
+      } else { notFoundErrorHandler)}}//hoe else statement?
 
   router.delete('/:id', authMiddleware, (req, res) => {
       const { id } = req.params;

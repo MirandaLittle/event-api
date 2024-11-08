@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
     try {
       const { name, id } = req.body 
       const newCategory = createCategory(name, id)
-      res.status(201).json(newCategory) 
+      res.status(201).json(`New category created with name: ${name} and id: ${id}`, newCategory) // added message
       
     } catch (error) {
       console.error(error)

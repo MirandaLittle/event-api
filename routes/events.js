@@ -44,7 +44,8 @@ router.get('/', (req, res) => {
       const { id } = req.params
       const { createdBy, title, description, image, categoryIds, location, startTime, endTime } = req.body
       const updatedEvent = updateEventById(id, createdBy, title, description, image, categoryIds, location, startTime, endTime)
-      res.status(200).json(updatedEvent)
+      res.status(200).json({
+        message: `The following event was updated ${updatedEvent}`})
 }, notFoundErrorHandler);
 
 router.delete('/:id', authMiddleware, (req, res) => {
