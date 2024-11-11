@@ -21,15 +21,17 @@ router.get('/', (req, res) => {
 
   router.post('/', authMiddleware, (req, res) => {
     try {
-      const { name, id } = req.body 
-      const newCategory = createCategory(name, id)
-      res.status(201).json(`New category created with name: ${name} and id: ${id}`, newCategory) // added message
+      const { name } = req.body
+      console.log("name from req.body in route:", name);
+      const newCategory = createCategory(name)
+      console.log("newCategory in route:", newCategory)
+      res.status(201).json({message: `New category created with name: ${name}`, newCategory}) // added message
       
     } catch (error) {
       console.error(error)
       res.status(500).send('Something went wrong while creating new category!')
     }
-  })
+  });
 
   router.get('/:id', (req, res) => {
     const { id } = req.params 
@@ -41,7 +43,7 @@ router.get('/', (req, res) => {
           const { id } = req.params
           const { name } = req.body
           const updatedCategory = updateCategoryById(id, name)
-          res.status(200).json(updatedCategory)
+          res.status(200).json({message: `Category with id ${id} was deleted!`, updatedCategory})
     }, notFoundErrorHandler);
 
     router.delete('/:id', authMiddleware, (req, res) => {
