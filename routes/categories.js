@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
       console.log("name from req.body in route:", name);
       const newCategory = createCategory(name)
       console.log("newCategory in route:", newCategory)
-      res.status(201).json({message: `New category created with name: ${name}`, newCategory}) // added message
+      res.status(201).json(newCategory)
       
     } catch (error) {
       console.error(error)
